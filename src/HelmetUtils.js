@@ -412,7 +412,7 @@ const updateAttributes = (tagName, attributes) => {
     } else if (
         elementTag.getAttribute(HELMET_ATTRIBUTE) !== attributeKeys.join(",")
     ) {
-        elementTag.setAttribute(HELMET_ATTRIBUTE, attributeKeys.join(","));
+        //elementTag.setAttribute(HELMET_ATTRIBUTE, attributeKeys.join(","));
     }
 };
 
@@ -450,7 +450,7 @@ const updateTags = (type, tags) => {
                 }
             }
 
-            newElement.setAttribute(HELMET_ATTRIBUTE, "true");
+           // newElement.setAttribute(HELMET_ATTRIBUTE, "true");
 
             // Remove a duplicate tag from domTagstoRemove, so it isn't cleared.
             if (
@@ -487,11 +487,12 @@ const generateTitleAsString = (type, title, attributes, encode) => {
     const attributeString = generateElementAttributesAsString(attributes);
     const flattenedTitle = flattenArray(title);
     return attributeString
-        ? `<${type} ${HELMET_ATTRIBUTE}="true" ${attributeString}>${encodeSpecialCharacters(
+        ? `<${type} 
+              ${attributeString}>${encodeSpecialCharacters(
               flattenedTitle,
               encode
           )}</${type}>`
-        : `<${type} ${HELMET_ATTRIBUTE}="true">${encodeSpecialCharacters(
+        : `<${type}>${encodeSpecialCharacters(
               flattenedTitle,
               encode
           )}</${type}>`;
@@ -521,7 +522,7 @@ const generateTagsAsString = (type, tags, encode) =>
 
         const isSelfClosing = SELF_CLOSING_TAGS.indexOf(type) === -1;
 
-        return `${str}<${type} ${HELMET_ATTRIBUTE}="true" ${attributeHtml}${isSelfClosing
+        return `${str}<${type} ${attributeHtml}${isSelfClosing
             ? `/>`
             : `>${tagContent}</${type}>`}`;
     }, "");
@@ -543,8 +544,8 @@ const convertReactPropstoHtmlAttributes = (props, initAttributes = {}) => {
 const generateTitleAsReactComponent = (type, title, attributes) => {
     // assigning into an array to define toString function on it
     const initProps = {
-        key: title,
-        [HELMET_ATTRIBUTE]: true
+        key: title//,
+       // [HELMET_ATTRIBUTE]: true
     };
     const props = convertElementAttributestoReactProps(attributes, initProps);
 
@@ -554,8 +555,8 @@ const generateTitleAsReactComponent = (type, title, attributes) => {
 const generateTagsAsReactComponent = (type, tags) =>
     tags.map((tag, i) => {
         const mappedTag = {
-            key: i,
-            [HELMET_ATTRIBUTE]: true
+            key: i//,
+            //[HELMET_ATTRIBUTE]: true
         };
 
         Object.keys(tag).forEach(attribute => {
